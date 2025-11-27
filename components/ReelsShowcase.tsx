@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play, TrendingUp, Store, ChevronRight, Eye, Pin, Heart } from 'lucide-react';
+import { Play, TrendingUp, Store, ChevronRight, Eye, Pin, Heart, ThumbsUp } from 'lucide-react';
 import { Reel } from '../types';
 
 type ReelType = 'viral' | 'promo' | 'all';
@@ -255,16 +255,19 @@ const ReelsShowcase: React.FC = () => {
                     </div>
                   )}
 
-                  {/* Vote / Like Button */}
+                  {/* Vote / Like Button - Enhanced with Label */}
                   <button 
                     onClick={(e) => handleVote(e, reel.id)}
-                    className="absolute top-3 right-3 z-20 group/heart"
-                    aria-label={`Like ${reel.title}`}
+                    className="absolute top-3 right-3 z-20 group/heart flex items-center space-x-1"
+                    aria-label={`Vote for ${reel.title}`}
                   >
-                     <div className={`p-2 rounded-full backdrop-blur-md transition-all duration-300 ${votedReels.includes(reel.id) ? 'bg-red-500/20 border border-red-500/50' : 'bg-black/30 border border-white/10 hover:bg-white/20'}`}>
+                     <span className={`text-[10px] font-bold uppercase tracking-wider bg-black/60 backdrop-blur-md px-2 py-1 rounded-full transition-all duration-300 ${votedReels.includes(reel.id) ? 'text-red-400 opacity-100' : 'text-white opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0'}`}>
+                        {votedReels.includes(reel.id) ? 'Voted' : 'Vote'}
+                     </span>
+                     <div className={`p-2 rounded-full backdrop-blur-md transition-all duration-300 shadow-lg ${votedReels.includes(reel.id) ? 'bg-red-500/20 border border-red-500/50 scale-110' : 'bg-black/40 border border-white/20 hover:bg-white/20 hover:scale-110'}`}>
                         <Heart 
                           size={16} 
-                          className={`transition-all duration-300 ${votedReels.includes(reel.id) ? 'fill-red-500 text-red-500 scale-110' : 'text-white group-hover/heart:scale-110'}`} 
+                          className={`transition-all duration-300 ${votedReels.includes(reel.id) ? 'fill-red-500 text-red-500 animate-[pulse_0.5s_ease-in-out]' : 'text-white'}`} 
                         />
                      </div>
                   </button>
@@ -296,8 +299,8 @@ const ReelsShowcase: React.FC = () => {
                           <span>{reel.views}</span>
                       </div>
                       <div className="flex items-center text-gray-300 text-xs font-medium">
-                          <Heart size={12} className={`mr-1.5 ${votedReels.includes(reel.id) ? 'fill-red-500 text-red-500' : 'text-gray-400'}`} />
-                          <span>{formatLikes(reel.likes)}</span>
+                          <Heart size={12} className={`mr-1.5 transition-colors ${votedReels.includes(reel.id) ? 'fill-red-500 text-red-500' : 'text-gray-400'}`} />
+                          <span className={`${votedReels.includes(reel.id) ? 'text-white font-bold' : ''}`}>{formatLikes(reel.likes)}</span>
                       </div>
                     </div>
                   </div>
